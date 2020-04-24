@@ -29,6 +29,8 @@ public class Main extends Shell<DDPublicAPI> {
 
                 FindPackage.class,
 
+                RegisterDrone.class,
+
                 RegisterPackage.class
         );
     }
