@@ -2,7 +2,9 @@ package cli.commands;
 
 import api.DDPublicAPI;
 import cli.framework.Command;
+import stubs.packageR.AlreadyExistingPackageException_Exception;
 import stubs.packageR.Provider;
+import stubs.packageR.UnknownProviderException;
 
 import java.util.List;
 
@@ -30,16 +32,14 @@ public class RegisterPackage extends Command<DDPublicAPI> {
 
     @Override
     public void execute() {
-        Provider p = shell.system.packws.findProvider(provider);
-        if (p !=null){
-            Boolean rep = shell.system.packws.register(number, weight, deliveryDate + " " + deliveryHour, p);
-            if (rep) {
-                System.out.println("*** Enrégistré ***");
-            } else {
-                System.out.println("*** Echec de l'enrégistrement ***");
-            }
-        }else{
+        try {
+            Provider p = shell.system.packws.findProvider(provider);
+            Boolean rep = shell.system.packws.registerPackage(number, weight, deliveryDate + " " + deliveryHour, p.getName());
+            System.out.println("*** Enrégistré ***");
+        } catch (UnknownProviderException e) {
             System.out.println("*** Transporteur non Connu !***");
+        } catch (AlreadyExistingPackageException_Exception e) {
+            System.out.println("*** Echec de l'enrégistrement ***");
         }
     }
 

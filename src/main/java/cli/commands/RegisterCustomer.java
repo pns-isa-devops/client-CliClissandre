@@ -2,6 +2,7 @@ package cli.commands;
 
 import api.DDPublicAPI;
 import cli.framework.Command;
+import stubs.customer.AlreadyExistingCustomerException_Exception;
 
 import java.util.List;
 
@@ -28,11 +29,11 @@ public class RegisterCustomer extends Command<DDPublicAPI> {
     }
 
     @Override
-    public void execute() {
-        Boolean rep = shell.system.cws.register(customerN, customerP, customerA);
-        if(rep){
+    public void execute()  {
+        try {
+            Boolean rep = shell.system.cws.registerCustomer(customerN, customerP, customerA);
             System.out.println("*** Enrégistré ***");
-        }else {
+        }catch (AlreadyExistingCustomerException_Exception e){
             System.out.println("*** Echec de l'enrégistrement ***");
         }
     }

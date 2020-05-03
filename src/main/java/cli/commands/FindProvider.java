@@ -3,6 +3,7 @@ package cli.commands;
 import api.DDPublicAPI;
 import cli.framework.Command;
 import stubs.provider.Provider;
+import stubs.provider.UnknownProviderException_Exception;
 
 
 import java.util.List;
@@ -27,12 +28,12 @@ public class FindProvider extends Command<DDPublicAPI> {
 
     @Override
     public void execute() {
-        Provider p = shell.system.pws.findProvider(name);
-        if (p != null) {
+        try {
+            Provider p = shell.system.pws.findProvider(name);
             System.out.println("<-------------------/" + "\\------------------------->");
             System.out.println("trouvé ::");
             System.out.println("<-------------------/" + "\\------------------------->");
-        } else {
+        }catch (UnknownProviderException_Exception e){
             System.out.println("Ce transporteur n'a pas encore été enregistré !");
         }
     }

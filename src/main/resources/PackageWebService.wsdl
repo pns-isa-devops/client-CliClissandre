@@ -1,18 +1,20 @@
 <wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
                   xmlns:tns="http://www.polytech.unice.fr/si/4a/isa/dd/packageService"
                   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:ns1="http://www.polytech.unice.fr/si/4a/isa/dd/providerService"
                   name="PackageRegisterWebServiceService"
                   targetNamespace="http://www.polytech.unice.fr/si/4a/isa/dd/packageService">
     <wsdl:types>
         <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                   xmlns:tns="http://www.polytech.unice.fr/si/4a/isa/dd/packageService" elementFormDefault="unqualified"
-                   targetNamespace="http://www.polytech.unice.fr/si/4a/isa/dd/packageService" version="1.0">
+                   xmlns:tns="http://www.polytech.unice.fr/si/4a/isa/dd/packageService"
+                   attributeFormDefault="unqualified" elementFormDefault="unqualified"
+                   targetNamespace="http://www.polytech.unice.fr/si/4a/isa/dd/packageService">
             <xs:element name="findPackage" type="tns:findPackage"/>
             <xs:element name="findPackageResponse" type="tns:findPackageResponse"/>
             <xs:element name="findProvider" type="tns:findProvider"/>
             <xs:element name="findProviderResponse" type="tns:findProviderResponse"/>
-            <xs:element name="register" type="tns:register"/>
-            <xs:element name="registerResponse" type="tns:registerResponse"/>
+            <xs:element name="registerPackage" type="tns:registerPackage"/>
+            <xs:element name="registerPackageResponse" type="tns:registerPackageResponse"/>
             <xs:complexType name="findProvider">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="provider_name" type="xs:string"/>
@@ -20,7 +22,7 @@
             </xs:complexType>
             <xs:complexType name="findProviderResponse">
                 <xs:sequence>
-                    <xs:element minOccurs="0" name="provider_find" type="tns:provider"/>
+                    <xs:element minOccurs="0" name="provider_found" type="tns:provider"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="provider">
@@ -99,36 +101,66 @@
                     <xs:element minOccurs="0" name="name" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="register">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="id" type="xs:string"/>
-                    <xs:element minOccurs="0" name="w" type="xs:double"/>
-                    <xs:element minOccurs="0" name="dateTime" type="xs:string"/>
-                    <xs:element minOccurs="0" name="provider" type="tns:provider"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="registerResponse">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="return" type="xs:boolean"/>
-                </xs:sequence>
-            </xs:complexType>
             <xs:complexType name="findPackage">
                 <xs:sequence>
-                    <xs:element minOccurs="0" name="id" type="xs:string"/>
+                    <xs:element minOccurs="0" name="secretNumber" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="findPackageResponse">
                 <xs:sequence>
-                    <xs:element minOccurs="0" name="package" type="tns:package"/>
+                    <xs:element minOccurs="0" name="package_found" type="tns:package"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="registerPackage">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="secretNumber" type="xs:string"/>
+                    <xs:element minOccurs="0" name="weight" type="xs:double"/>
+                    <xs:element minOccurs="0" name="dateTime" type="xs:string"/>
+                    <xs:element minOccurs="0" name="providerName" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="registerPackageResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="UnknownPackageException" type="tns:UnknownPackageException"/>
+            <xs:complexType name="UnknownPackageException">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="secret_number_not_found" type="xs:string"/>
+                    <xs:element minOccurs="0" name="message" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="AlreadyExistingPackageException" type="tns:AlreadyExistingPackageException"/>
+            <xs:complexType name="AlreadyExistingPackageException">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="conflic_secret_number" type="xs:string"/>
+                    <xs:element minOccurs="0" name="conflic_provider_name" type="xs:string"/>
+                    <xs:element minOccurs="0" name="message" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
         </xs:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                    xmlns:tns="http://www.polytech.unice.fr/si/4a/isa/dd/providerService"
+                    attributeFormDefault="unqualified" elementFormDefault="unqualified"
+                    targetNamespace="http://www.polytech.unice.fr/si/4a/isa/dd/providerService">
+            <xsd:element name="UnknownProviderException" type="tns:UnknownProviderException"/>
+            <xsd:complexType name="UnknownProviderException">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="_unknownProviderName" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="message" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
     </wsdl:types>
-    <wsdl:message name="register">
-        <wsdl:part element="tns:register" name="parameters"></wsdl:part>
+    <wsdl:message name="registerPackageResponse">
+        <wsdl:part element="tns:registerPackageResponse" name="parameters"></wsdl:part>
     </wsdl:message>
-    <wsdl:message name="registerResponse">
-        <wsdl:part element="tns:registerResponse" name="parameters"></wsdl:part>
+    <wsdl:message name="UnknownProviderException">
+        <wsdl:part element="ns1:UnknownProviderException" name="UnknownProviderException"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="UnknownPackageException">
+        <wsdl:part element="tns:UnknownPackageException" name="UnknownPackageException"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="findProvider">
         <wsdl:part element="tns:findProvider" name="parameters"></wsdl:part>
@@ -136,8 +168,14 @@
     <wsdl:message name="findPackage">
         <wsdl:part element="tns:findPackage" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="AlreadyExistingPackageException">
+        <wsdl:part element="tns:AlreadyExistingPackageException" name="AlreadyExistingPackageException"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="findPackageResponse">
         <wsdl:part element="tns:findPackageResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="registerPackage">
+        <wsdl:part element="tns:registerPackage" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="findProviderResponse">
         <wsdl:part element="tns:findProviderResponse" name="parameters"></wsdl:part>
@@ -146,14 +184,19 @@
         <wsdl:operation name="findProvider">
             <wsdl:input message="tns:findProvider" name="findProvider"></wsdl:input>
             <wsdl:output message="tns:findProviderResponse" name="findProviderResponse"></wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="register">
-            <wsdl:input message="tns:register" name="register"></wsdl:input>
-            <wsdl:output message="tns:registerResponse" name="registerResponse"></wsdl:output>
+            <wsdl:fault message="tns:UnknownProviderException" name="UnknownProviderException"></wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="findPackage">
             <wsdl:input message="tns:findPackage" name="findPackage"></wsdl:input>
             <wsdl:output message="tns:findPackageResponse" name="findPackageResponse"></wsdl:output>
+            <wsdl:fault message="tns:UnknownPackageException" name="UnknownPackageException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="registerPackage">
+            <wsdl:input message="tns:registerPackage" name="registerPackage"></wsdl:input>
+            <wsdl:output message="tns:registerPackageResponse" name="registerPackageResponse"></wsdl:output>
+            <wsdl:fault message="tns:AlreadyExistingPackageException"
+                        name="AlreadyExistingPackageException"></wsdl:fault>
+            <wsdl:fault message="tns:UnknownProviderException" name="UnknownProviderException"></wsdl:fault>
         </wsdl:operation>
     </wsdl:portType>
     <wsdl:binding name="PackageWebServiceServiceSoapBinding" type="tns:PackageRegisterWebService">
@@ -166,15 +209,9 @@
             <wsdl:output name="findProviderResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="register">
-            <soap:operation soapAction="" style="document"/>
-            <wsdl:input name="register">
-                <soap:body use="literal"/>
-            </wsdl:input>
-            <wsdl:output name="registerResponse">
-                <soap:body use="literal"/>
-            </wsdl:output>
+            <wsdl:fault name="UnknownProviderException">
+                <soap:fault name="UnknownProviderException" use="literal"/>
+            </wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="findPackage">
             <soap:operation soapAction="" style="document"/>
@@ -184,6 +221,24 @@
             <wsdl:output name="findPackageResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
+            <wsdl:fault name="UnknownPackageException">
+                <soap:fault name="UnknownPackageException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="registerPackage">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="registerPackage">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="registerPackageResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="AlreadyExistingPackageException">
+                <soap:fault name="AlreadyExistingPackageException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="UnknownProviderException">
+                <soap:fault name="UnknownProviderException" use="literal"/>
+            </wsdl:fault>
         </wsdl:operation>
     </wsdl:binding>
     <wsdl:service name="PackageWebServiceService">
