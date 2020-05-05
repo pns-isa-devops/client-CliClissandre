@@ -2,8 +2,9 @@ package cli.commands;
 
 import api.DDPublicAPI;
 import cli.framework.Command;
-import stubs.customer.AlreadyExistingCustomerException_Exception;
-import stubs.planning.Exception_Exception;
+import stubs.customer.UnknownCustomerException_Exception;
+import stubs.packageR.UnknownPackageException_Exception;
+import stubs.planning.*;
 
 import java.util.List;
 
@@ -33,8 +34,16 @@ public class RegisterDelivery extends Command<DDPublicAPI> {
         try {
             String rep = shell.system.plws.registerDelivery(a, b, c, d);
             System.out.println("*** Enrégistré ***");
-        } catch (Exception_Exception e) {
-            System.out.println("*** Echec de l'enrégistrement ***");
+        } catch (UnvailableSlotTimeException_Exception e) {
+            System.out.println("*** Plage horaire indisponible ***");
+        }catch (PackageAlreadyTookException_Exception e) {
+            System.out.println("*** La livraison de ce colis a été déja programmé ***");
+        } catch (ParseException_Exception e) {
+            System.out.println("*** Date Error ***");
+        } catch (UnknownCustomerException e) {
+            System.out.println("*** Ce client n'a pas été enrégistré ***");
+        } catch (UnknownPackageException e) {
+            System.out.println("*** Colis Inexistant ***");
         }
     }
 

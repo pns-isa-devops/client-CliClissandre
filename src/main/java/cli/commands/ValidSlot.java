@@ -2,8 +2,8 @@ package cli.commands;
 
 import api.DDPublicAPI;
 import cli.framework.Command;
-import stubs.planning.Exception_Exception;
-
+import stubs.planning.ParseException_Exception;
+import stubs.planning.UnvailableSlotTimeException_Exception;
 
 
 import java.util.List;
@@ -31,8 +31,8 @@ public class ValidSlot extends Command<DDPublicAPI> {
             System.out.println("<-------------------/" + "\\------------------------->");
             System.out.println("CRENEAU DISPONIBLE !");
             System.out.println("<-------------------/" + "\\------------------------->");;
-        } catch (Exception_Exception e) {
-            System.out.println("Horaire indisponible !");
+        } catch (ParseException_Exception e) {
+            System.out.println("Date Error");
         }
     }
 

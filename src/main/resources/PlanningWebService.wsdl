@@ -1,6 +1,8 @@
 <wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
                   xmlns:tns="http://www.polytech.unice.fr/si/4a/isa/dd/planningService"
                   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:ns2="http://www.polytech.unice.fr/si/4a/isa/dd/customerService"
+                  xmlns:ns1="http://www.polytech.unice.fr/si/4a/isa/dd/packageService"
                   name="PlanningWebServiceService"
                   targetNamespace="http://www.polytech.unice.fr/si/4a/isa/dd/planningService">
     <wsdl:types>
@@ -51,22 +53,68 @@
                     <xs:element minOccurs="0" name="valid_slot" type="xs:boolean"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:element name="Exception" type="tns:Exception"/>
-            <xs:complexType name="Exception">
+            <xs:element name="UnvailableSlotTimeException" type="tns:UnvailableSlotTimeException"/>
+            <xs:complexType name="UnvailableSlotTimeException">
                 <xs:sequence>
+                    <xs:element minOccurs="0" name="hourUnvailable" type="xs:string"/>
+                    <xs:element minOccurs="0" name="dateUnvailable" type="xs:string"/>
+                    <xs:element minOccurs="0" name="message" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="PackageAlreadyTookException" type="tns:PackageAlreadyTookException"/>
+            <xs:complexType name="PackageAlreadyTookException">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="number" type="xs:string"/>
+                    <xs:element minOccurs="0" name="message" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ParseException" type="tns:ParseException"/>
+            <xs:complexType name="ParseException">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="errorOffset" type="xs:int"/>
                     <xs:element minOccurs="0" name="message" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
         </xs:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                    xmlns:tns="http://www.polytech.unice.fr/si/4a/isa/dd/packageService"
+                    attributeFormDefault="unqualified" elementFormDefault="unqualified"
+                    targetNamespace="http://www.polytech.unice.fr/si/4a/isa/dd/packageService">
+            <xsd:element name="UnknownPackageException" type="tns:UnknownPackageException"/>
+            <xsd:complexType name="UnknownPackageException">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="secret_number_not_found" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="message" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                    xmlns:tns="http://www.polytech.unice.fr/si/4a/isa/dd/customerService"
+                    attributeFormDefault="unqualified" elementFormDefault="unqualified"
+                    targetNamespace="http://www.polytech.unice.fr/si/4a/isa/dd/customerService">
+            <xsd:element name="UnknownCustomerException" type="tns:UnknownCustomerException"/>
+            <xsd:complexType name="UnknownCustomerException">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="_unknownCustomerName" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="message" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
     </wsdl:types>
-    <wsdl:message name="Exception">
-        <wsdl:part element="tns:Exception" name="Exception"></wsdl:part>
+    <wsdl:message name="PackageAlreadyTookException">
+        <wsdl:part element="tns:PackageAlreadyTookException" name="PackageAlreadyTookException"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="validSlot">
         <wsdl:part element="tns:validSlot" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="ParseException">
+        <wsdl:part element="tns:ParseException" name="ParseException"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="register_delivery">
         <wsdl:part element="tns:register_delivery" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="UnvailableSlotTimeException">
+        <wsdl:part element="tns:UnvailableSlotTimeException" name="UnvailableSlotTimeException"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="repogramming_deliveryResponse">
         <wsdl:part element="tns:repogramming_deliveryResponse" name="parameters"></wsdl:part>
@@ -74,8 +122,14 @@
     <wsdl:message name="register_deliveryResponse">
         <wsdl:part element="tns:register_deliveryResponse" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="UnknownPackageException">
+        <wsdl:part element="ns1:UnknownPackageException" name="UnknownPackageException"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="repogramming_delivery">
         <wsdl:part element="tns:repogramming_delivery" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="UnknownCustomerException">
+        <wsdl:part element="ns2:UnknownCustomerException" name="UnknownCustomerException"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="validSlotResponse">
         <wsdl:part element="tns:validSlotResponse" name="parameters"></wsdl:part>
@@ -84,17 +138,22 @@
         <wsdl:operation name="register_delivery">
             <wsdl:input message="tns:register_delivery" name="register_delivery"></wsdl:input>
             <wsdl:output message="tns:register_deliveryResponse" name="register_deliveryResponse"></wsdl:output>
-            <wsdl:fault message="tns:Exception" name="Exception"></wsdl:fault>
+            <wsdl:fault message="tns:UnknownCustomerException" name="UnknownCustomerException"></wsdl:fault>
+            <wsdl:fault message="tns:UnvailableSlotTimeException" name="UnvailableSlotTimeException"></wsdl:fault>
+            <wsdl:fault message="tns:UnknownPackageException" name="UnknownPackageException"></wsdl:fault>
+            <wsdl:fault message="tns:ParseException" name="ParseException"></wsdl:fault>
+            <wsdl:fault message="tns:PackageAlreadyTookException" name="PackageAlreadyTookException"></wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="repogramming_delivery">
             <wsdl:input message="tns:repogramming_delivery" name="repogramming_delivery"></wsdl:input>
             <wsdl:output message="tns:repogramming_deliveryResponse" name="repogramming_deliveryResponse"></wsdl:output>
-            <wsdl:fault message="tns:Exception" name="Exception"></wsdl:fault>
+            <wsdl:fault message="tns:UnvailableSlotTimeException" name="UnvailableSlotTimeException"></wsdl:fault>
+            <wsdl:fault message="tns:ParseException" name="ParseException"></wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="validSlot">
             <wsdl:input message="tns:validSlot" name="validSlot"></wsdl:input>
             <wsdl:output message="tns:validSlotResponse" name="validSlotResponse"></wsdl:output>
-            <wsdl:fault message="tns:Exception" name="Exception"></wsdl:fault>
+            <wsdl:fault message="tns:ParseException" name="ParseException"></wsdl:fault>
         </wsdl:operation>
     </wsdl:portType>
     <wsdl:binding name="PlanningWebServiceServiceSoapBinding" type="tns:PlanningWebService">
@@ -107,8 +166,20 @@
             <wsdl:output name="register_deliveryResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
-            <wsdl:fault name="Exception">
-                <soap:fault name="Exception" use="literal"/>
+            <wsdl:fault name="UnknownCustomerException">
+                <soap:fault name="UnknownCustomerException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="UnvailableSlotTimeException">
+                <soap:fault name="UnvailableSlotTimeException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="UnknownPackageException">
+                <soap:fault name="UnknownPackageException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ParseException">
+                <soap:fault name="ParseException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="PackageAlreadyTookException">
+                <soap:fault name="PackageAlreadyTookException" use="literal"/>
             </wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="repogramming_delivery">
@@ -119,8 +190,11 @@
             <wsdl:output name="repogramming_deliveryResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
-            <wsdl:fault name="Exception">
-                <soap:fault name="Exception" use="literal"/>
+            <wsdl:fault name="UnvailableSlotTimeException">
+                <soap:fault name="UnvailableSlotTimeException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="ParseException">
+                <soap:fault name="ParseException" use="literal"/>
             </wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="validSlot">
@@ -131,8 +205,8 @@
             <wsdl:output name="validSlotResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
-            <wsdl:fault name="Exception">
-                <soap:fault name="Exception" use="literal"/>
+            <wsdl:fault name="ParseException">
+                <soap:fault name="ParseException" use="literal"/>
             </wsdl:fault>
         </wsdl:operation>
     </wsdl:binding>
