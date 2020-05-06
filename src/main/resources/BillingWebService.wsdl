@@ -1,0 +1,65 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://www.polytech.unice.fr/si/4a/isa/dd/billingService"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  name="BillingWebServiceService"
+                  targetNamespace="http://www.polytech.unice.fr/si/4a/isa/dd/billingService">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                   xmlns:tns="http://www.polytech.unice.fr/si/4a/isa/dd/billingService"
+                   attributeFormDefault="unqualified" elementFormDefault="unqualified"
+                   targetNamespace="http://www.polytech.unice.fr/si/4a/isa/dd/billingService">
+            <xs:element name="checkStatut" type="tns:checkStatut"/>
+            <xs:element name="checkStatutResponse" type="tns:checkStatutResponse"/>
+            <xs:complexType name="checkStatut">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="checkStatutResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="payedList" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ExternalPartnerException" type="tns:ExternalPartnerException"/>
+            <xs:complexType name="ExternalPartnerException">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="message" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="checkStatutResponse">
+        <wsdl:part element="tns:checkStatutResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="checkStatut">
+        <wsdl:part element="tns:checkStatut" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="ExternalPartnerException">
+        <wsdl:part element="tns:ExternalPartnerException" name="ExternalPartnerException"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="BillingWebService">
+        <wsdl:operation name="checkStatut">
+            <wsdl:input message="tns:checkStatut" name="checkStatut"></wsdl:input>
+            <wsdl:output message="tns:checkStatutResponse" name="checkStatutResponse"></wsdl:output>
+            <wsdl:fault message="tns:ExternalPartnerException" name="ExternalPartnerException"></wsdl:fault>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BillingWebServiceServiceSoapBinding" type="tns:BillingWebService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="checkStatut">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="checkStatut">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="checkStatutResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ExternalPartnerException">
+                <soap:fault name="ExternalPartnerException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="BillingWebServiceService">
+        <wsdl:port binding="tns:BillingWebServiceServiceSoapBinding" name="BillingWebServicePort">
+            <soap:address location="http://localhost:8080/BillingComponent/webservices/BillingWS"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
