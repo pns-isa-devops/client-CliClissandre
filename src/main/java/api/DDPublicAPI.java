@@ -1,5 +1,7 @@
 package api;
 
+import stubs.billing.BillingWebService;
+import stubs.billing.BillingWebServiceService;
 import stubs.customer.CustomerWebService;
 import stubs.customer.CustomerWebServiceService;
 import stubs.delivery.DeliveryWebService;
@@ -24,6 +26,7 @@ public class DDPublicAPI {
     public DroneWebService dws;
     public PlanningWebService plws;
     public DeliveryWebService dews;
+    public BillingWebService bws;
 
 
     public DDPublicAPI(String host, String port) {
@@ -33,6 +36,7 @@ public class DDPublicAPI {
         initDWS(host, port);
         initPLWS(host, port);
         initDDES(host, port);
+        initBBS(host,port);
     }
 
     private void initCWS(String host, String port) {
@@ -81,5 +85,13 @@ public class DDPublicAPI {
         this.dews = factory.getDeliveryWebServicePort();
         String address = "http://" + host + ":" + port + "/Web/webservices/DeliveryWS";
         ((BindingProvider) dews).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, address);
+    }
+
+    private void initBBS(String host, String port) {
+        URL wsdlLocation = DDPublicAPI.class.getResource("/BillingWebService.wsdl");
+        BillingWebServiceService factory = new BillingWebServiceService(wsdlLocation);
+        this.bws = factory.getBillingWebServicePort();
+        String address = "http://" + host + ":" + port + "/Web/webservices/BillingWS";
+        ((BindingProvider) bws).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, address);
     }
 }

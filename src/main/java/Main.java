@@ -31,6 +31,8 @@ public class Main extends Shell<DDPublicAPI> {
 
                 ValidSlot.class,
 
+                CheckStatus.class,
+
                 RegisterDrone.class,
 
                 RegisterDelivery.class,
