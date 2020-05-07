@@ -2,13 +2,15 @@ package cli.commands;
 
 import api.DDPublicAPI;
 import cli.framework.Command;
-import stubs.drone.Exception_Exception;
+import stubs.drone.ParseException_Exception;
 
 import java.util.List;
 
 public class RegisterDrone extends Command<DDPublicAPI> {
 
     private String id;
+    private String date;
+    private String hour;
 
     @Override
     public String identifier() {
@@ -18,11 +20,13 @@ public class RegisterDrone extends Command<DDPublicAPI> {
     @Override
     public void load(List<String> args) {
         id = args.get(0);
+        date = args.get(1);
+        hour = args.get(2);
     }
 
     @Override
-    public void execute() throws Exception_Exception {
-        Boolean rep = shell.system.dws.register(id);
+    public void execute() throws ParseException_Exception {
+        Boolean rep = shell.system.dws.register(id,date,hour);
         if (rep) {
             System.out.println("*** Enrégistré ***");
         } else {

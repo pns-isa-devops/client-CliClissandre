@@ -27,10 +27,16 @@ public class ValidSlot extends Command<DDPublicAPI> {
     @Override
     public void execute() {
         try {
-            Boolean rep = shell.system.plws.validSlot(d,h);
-            System.out.println("<-------------------/" + "\\------------------------->");
-            System.out.println("CRENEAU DISPONIBLE !");
-            System.out.println("<-------------------/" + "\\------------------------->");;
+            Boolean rep = shell.system.plws.validSlot(d, h);
+            if (rep) {
+                System.out.println("<-------------------/" + "\\------------------------->");
+                System.out.println("CRENEAU DISPONIBLE !");
+                System.out.println("<-------------------/" + "\\------------------------->");
+            } else {
+                System.out.println("<-------------------/" + "\\------------------------->");
+                System.out.println("CRENEAU INDISPONIBLE !");
+                System.out.println("<-------------------/" + "\\------------------------->");
+            }
         } catch (ParseException_Exception e) {
             System.out.println("Date Error");
         }

@@ -29,6 +29,7 @@ public class FindPackage extends Command<DDPublicAPI> {
             System.out.println("Num :: " + p.getSecretNumber());
             System.out.println("Poids :: " + p.getWeight());
             System.out.println("Transporteur :: " + p.getProvider().getName());
+            System.out.println("Date d'enregistrement :: " + p.getRegisterDate());
             System.out.println("Date de Livraison :: " + p.getDeliveryDate());
             System.out.println("<-------------------/" + "\\------------------------->");
         }catch (UnknownPackageException_Exception e){

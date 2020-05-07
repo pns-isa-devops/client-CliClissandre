@@ -9,6 +9,7 @@ import java.util.List;
 //public class GetNextDelivery {
 public class CheckStatus extends Command<DDPublicAPI> {
 
+    private int id;
 
     @Override
     public String identifier() {
@@ -17,20 +18,21 @@ public class CheckStatus extends Command<DDPublicAPI> {
 
     @Override
     public void load(List<String> args) {
-
+        try {
+            id = Integer.parseInt(args.get(0));
+        } catch (NumberFormatException e) {
+            System.out.println("Id incorrect");
+        }
     }
 
     @Override
     public void execute() throws ExternalPartnerException_Exception {
-        try {
-            List<Integer> l = shell.system.bws.checkStatut();
-            for (Integer i : l
-            ) {
-                System.out.println(" i " + i);
-            }
-        } catch (ExternalPartnerException_Exception e) {
-            System.out.println("<-------------------/" + "\\------------------------->");
-        }
+        System.out.println("STATUT -----> " + shell.system.bws.checkStatut(id));
+//            List<Integer> l = shell.system.bws.checkStatut();
+//            for (Integer i : l
+//            ) {
+//                System.out.println(" i " + i);
+//            }
     }
 
     @Override
