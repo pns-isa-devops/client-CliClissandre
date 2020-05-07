@@ -25,17 +25,17 @@ public class GetBills extends Command<DDPublicAPI> {
     @Override
     public void execute() {
         List<Bill> lB = shell.system.bws.getBills();
-        if(lB.size() == 0){
-            System.out.println("<-------------------/" + "\\------------------------->");
+        if(lB.size() == 0){     System.out.println("<-------------------/" + "\\------------------------->");
             System.out.println("AUCUNE FACTURE DISPONIBLE !");
             System.out.println("<-------------------/" + "\\------------------------->");
+
         }else {
             for (Bill p : lB
             ) {
                 System.out.println("<-------------------/" + "\\------------------------->");
                 System.out.println("Num :: " + p.getId());
                 System.out.println("Prix :: " + p.getBillAmount());
-                System.out.println("Transporteur :: " + p.getProvider());
+                System.out.println("Transporteur :: " + p.getProvider().getName());
                 System.out.println("Statut :: " + p.getBillStatus());
                 System.out.println("<-------------------/" + "\\------------------------->");
             }

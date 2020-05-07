@@ -34,6 +34,9 @@ public class GetAllDeliveriesOfDate extends Command<DDPublicAPI> {
                  System.out.println("Transporteur :: " + p.getPackageDelivered().getProvider().getName());
                  System.out.println("Date d'enregistrement :: " + p.getPackageDelivered().getRegisterDate());
                  System.out.println("Date de Livraison :: " + p.getDeliveryDate());
+                 if (p.getDrone()!=null){
+                     System.out.println("Drone chargé de la livraison :: " + p.getDrone().getDroneId());
+                 }
 //                 System.out.println("Drone chargé de la livraison :: " + p.getDrone().getDroneId());
                  System.out.println("<-------------------/" + "\\------------------------->");
             }
