@@ -31,9 +31,9 @@ public class GetPaidBills extends Command<DDPublicAPI> {
                 for (Bill p : lB
                 ) {
                     System.out.println("<-------------------/" + "\\------------------------->");
-                    System.out.println("Num :: " + p.getId());
+                    System.out.println("Num :: " + p.getIdBill());
                     System.out.println("Prix :: " + p.getBillAmount());
-                    System.out.println("Transporteur :: " + p.getProvider());
+                    System.out.println("Transporteur :: " + p.getProvider().getName());
                     System.out.println("Statut :: " + p.getBillStatus());
                     System.out.println("<-------------------/" + "\\------------------------->");
                 }
