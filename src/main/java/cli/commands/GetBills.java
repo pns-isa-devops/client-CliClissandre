@@ -44,7 +44,7 @@ public class GetBills extends Command<DDPublicAPI> {
 
     @Override
     public String describe() {
-        return "-----> Rechercher une livraison par date et heure";
+        return "-----> Lister toutes les factures";
     }
 
 }

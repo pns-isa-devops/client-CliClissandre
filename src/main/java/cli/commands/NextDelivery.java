@@ -45,7 +45,7 @@ public class NextDelivery extends Command<DDPublicAPI> {
 
     @Override
     public String describe() {
-        return "-----> Rechercher une livraison par date et heure";
+        return "-----> Avoir la prochaine livraison";
     }
 
 }

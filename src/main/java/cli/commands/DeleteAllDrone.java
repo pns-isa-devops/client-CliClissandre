@@ -19,7 +19,7 @@ public class DeleteAllDrone extends Command<DDPublicAPI> {
 
     @Override
     public void execute(){
-        Boolean rep = shell.system.dews.deleteAll();
+        Boolean rep = shell.system.dws.deleteAll();
         System.out.println("Delete ===> "+rep);
     }
 

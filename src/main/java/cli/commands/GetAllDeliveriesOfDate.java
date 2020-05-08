@@ -44,7 +44,7 @@ public class GetAllDeliveriesOfDate extends Command<DDPublicAPI> {
 
     @Override
     public String describe() {
-        return "-----> Rechercher une livraison par date et heure";
+        return "-----> Rechercher une livraison par date";
     }
 
 }

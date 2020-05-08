@@ -62,7 +62,9 @@ public class Main extends Shell<DDPublicAPI> {
 
                 DeleteAllPackage.class,
 
-                DeleteAllProvider.class
+                DeleteAllProvider.class,
+
+                DeleteAllDrone.class
         );
     }
 
