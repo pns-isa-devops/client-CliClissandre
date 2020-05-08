@@ -52,7 +52,17 @@ public class Main extends Shell<DDPublicAPI> {
 
                 GetBills.class,
 
-                GetPaidBills.class
+                GetPaidBills.class,
+
+                DeleteAllCustomer.class,
+
+                DeleteAllBill.class,
+
+                DeleteAllDelivery.class,
+
+                DeleteAllPackage.class,
+
+                DeleteAllProvider.class
         );
     }
 
