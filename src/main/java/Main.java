@@ -69,7 +69,6 @@ public class Main extends Shell<DDPublicAPI> {
     }
 
     public static void main(String[] args) {
-//        System.out.println("d");
         String host = (args.length == 0 ? "localhost" : args[0]);
         String port = (args.length < 2 ? "8000" : args[1]);
         System.out.println("\n\nStarting Drone Delivery By Livrair");
