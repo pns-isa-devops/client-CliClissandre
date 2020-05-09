@@ -1,8 +1,8 @@
 <wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                  xmlns:tns="http://www.polytech.unice.fr/si/4a/isa/dd/deliveryService"
-                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
-                  name="DeliveryWebServiceService"
-                  targetNamespace="http://www.polytech.unice.fr/si/4a/isa/dd/deliveryService">
+                   xmlns:tns="http://www.polytech.unice.fr/si/4a/isa/dd/deliveryService"
+                   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+                   name="DeliveryWebServiceService"
+                   targetNamespace="http://www.polytech.unice.fr/si/4a/isa/dd/deliveryService">
     <wsdl:types>
         <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
                    xmlns:tns="http://www.polytech.unice.fr/si/4a/isa/dd/deliveryService"
@@ -109,9 +109,8 @@
             </xs:complexType>
             <xs:complexType name="drone">
                 <xs:sequence>
-                    <xs:element name="batteryLife" type="xs:int"/>
                     <xs:element minOccurs="0" name="droneId" type="xs:string"/>
-                    <xs:element name="flightHours" type="xs:int"/>
+                    <xs:element name="flightHours" type="xs:double"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="droneStatus">
