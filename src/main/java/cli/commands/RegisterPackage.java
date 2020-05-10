@@ -6,6 +6,8 @@ import stubs.packageR.AlreadyExistingPackageException_Exception;
 import stubs.packageR.Provider;
 import stubs.packageR.UnknownProviderException;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class RegisterPackage extends Command<DDPublicAPI> {
@@ -27,6 +29,9 @@ public class RegisterPackage extends Command<DDPublicAPI> {
         provider = args.get(1);
         weight = Double.parseDouble(args.get(2));
         deliveryDate = args.get(3);
+        if (deliveryDate.equals("TODAY")){
+            deliveryDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        }
         deliveryHour = args.get(4);
     }
 

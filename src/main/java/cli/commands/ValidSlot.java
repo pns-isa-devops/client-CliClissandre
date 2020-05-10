@@ -6,6 +6,8 @@ import stubs.planning.ParseException_Exception;
 import stubs.planning.UnvailableSlotTimeException_Exception;
 
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class ValidSlot extends Command<DDPublicAPI> {
@@ -22,6 +24,9 @@ public class ValidSlot extends Command<DDPublicAPI> {
     public void load(List<String> args) {
         d = args.get(0);
         h = args.get(1);
+        if (d.equals("TODAY")){
+            d = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        }
     }
 
     @Override

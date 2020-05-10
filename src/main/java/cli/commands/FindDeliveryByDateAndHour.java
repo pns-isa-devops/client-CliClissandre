@@ -5,6 +5,8 @@ import cli.framework.Command;
 import stubs.delivery.Delivery;
 import stubs.delivery.Exception_Exception;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class FindDeliveryByDateAndHour extends Command<DDPublicAPI> {
@@ -21,6 +23,9 @@ public class FindDeliveryByDateAndHour extends Command<DDPublicAPI> {
     public void load(List<String> args) {
         date = args.get(0);
         hour = args.get(1);
+        if (date.equals("TODAY")){
+            date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        }
     }
 
     @Override

@@ -6,6 +6,8 @@ import stubs.customer.UnknownCustomerException_Exception;
 import stubs.packageR.UnknownPackageException_Exception;
 import stubs.planning.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class RegisterDelivery extends Command<DDPublicAPI> {
@@ -26,6 +28,9 @@ public class RegisterDelivery extends Command<DDPublicAPI> {
         a = args.get(0) + " " + args.get(1);
         b = args.get(2);
         c = args.get(3);
+        if (c.equals("TODAY")){
+            c = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        }
         d = args.get(4);
     }
 

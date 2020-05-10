@@ -4,6 +4,8 @@ import api.DDPublicAPI;
 import cli.framework.Command;
 import stubs.drone.ParseException_Exception;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class RegisterDrone extends Command<DDPublicAPI> {
@@ -22,6 +24,9 @@ public class RegisterDrone extends Command<DDPublicAPI> {
         id = args.get(0);
         date = args.get(1);
         hour = args.get(2);
+        if (date.equals("TODAY")){
+            date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        }
     }
 
     @Override

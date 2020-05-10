@@ -7,6 +7,8 @@ import stubs.delivery.Exception_Exception;
 import stubs.delivery.ParseException_Exception;
 
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class GetAllDeliveriesOfDate extends Command<DDPublicAPI> {
@@ -21,25 +23,28 @@ public class GetAllDeliveriesOfDate extends Command<DDPublicAPI> {
     @Override
     public void load(List<String> args) {
         date = args.get(0);
+        if (date.equals("TODAY")) {
+            date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        }
     }
 
     @Override
     public void execute() {
-            List<Delivery> lD = shell.system.dews.getAllDeliveriesOfTheDate(date);
-             for (Delivery p : lD
-            ) {
-                 System.out.println("<-------------------/" + "\\------------------------->");
-                 System.out.println("Num :: " + p.getPackageDelivered().getSecretNumber());
-                 System.out.println("Poids :: " + p.getPackageDelivered().getWeight());
-                 System.out.println("Transporteur :: " + p.getPackageDelivered().getProvider().getName());
-                 System.out.println("Date d'enregistrement :: " + p.getPackageDelivered().getRegisterDate());
-                 System.out.println("Date de Livraison :: " + p.getDeliveryDate());
-                 if (p.getDrone()!=null){
-                     System.out.println("Drone chargé de la livraison :: " + p.getDrone().getDroneId());
-                 }
-//                 System.out.println("Drone chargé de la livraison :: " + p.getDrone().getDroneId());
-                 System.out.println("<-------------------/" + "\\------------------------->");
+        List<Delivery> lD = shell.system.dews.getAllDeliveriesOfTheDate(date);
+        for (Delivery p : lD
+        ) {
+            System.out.println("<-------------------/" + "\\------------------------->");
+            System.out.println("Num :: " + p.getPackageDelivered().getSecretNumber());
+            System.out.println("Poids :: " + p.getPackageDelivered().getWeight());
+            System.out.println("Transporteur :: " + p.getPackageDelivered().getProvider().getName());
+            System.out.println("Date d'enregistrement :: " + p.getPackageDelivered().getRegisterDate());
+            System.out.println("Date de Livraison :: " + p.getDeliveryDate());
+            if (p.getDrone() != null) {
+                System.out.println("Drone chargé de la livraison :: " + p.getDrone().getDroneId());
             }
+//                 System.out.println("Drone chargé de la livraison :: " + p.getDrone().getDroneId());
+            System.out.println("<-------------------/" + "\\------------------------->");
+        }
     }
 
     @Override
